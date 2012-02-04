@@ -1,0 +1,786 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel='stylesheet' type='text/css' href='style.css'>
+    <title>ZAWS - Amazon Web Service access from Common Lisp</title>
+    </head>
+  <body>
+
+<div id='content'>
+<h2>ZAWS - Amazon Web Service access from Common Lisp</h2>
+
+<p>ZAWS is a Common Lisp library for
+   creating <a href="http://aws.amazon.com/">Amazon Web Service</a>
+   client libraries. It is available under a BSD-style license;
+   see <a href='LICENSE.txt'>LICENSE.txt</a> for details.
+
+The latest version is 1.0, released on Febrary 2nd, 2012.
+
+ <p>Download
+ shortcut: <a href='http://www.xach.com/lisp/zs3.tgz'>http://www.xach.com/lisp/zaws.tgz</a>
+
+<a name='overview'><h2>Overview</h2></a>
+
+
+<a name='utility'><h2>Utility</h2></a>
+
+<p>Utility
+
+<div class='item'>
+  <div class='type'><a name='octet'>[Type]</a></div>
+  <div class='signature'>
+    <code class='name'>octet</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='octet-vector'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>octet-vector</code>
+    <span class='args'>
+      <code class='llkw'>&amp;rest</code> <var>octets</var>
+    </span>
+    <span class='result'>=> <var>octet-vector</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='base64'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>base64</code>
+    <span class='args'>
+      <var>vector</var>
+    </span>
+    <span class='result'>=> <var>encoded-string</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='utf8'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>utf8</code>
+    <span class='args'>
+      <var>string</var>
+    </span>
+    <span class='result'>=> <var>octet-vector</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='aws-url-encode'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>aws-url-encode</code>
+    <span class='args'>
+      <var>string</var>
+    </span>
+    <span class='result'>=> <var>encoded-string</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='iso8601-timestamp'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>iso8601-timestamp</code>
+    <span class='args'>
+      <code class='llkw'>&amp;optional</code> <var>time</var>
+    </span>
+    <span class='result'>=> <var>timestamp-string</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='rfc1123-timestamp'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>rfc1123-timestamp</code>
+    <span class='args'>
+      <code class='llkw'>&amp;optional</code> <var>time</var>
+    </span>
+    <span class='result'>=> <var>timestamp-string</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='parse-iso8601-timestamp'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>parse-iso8601-timestamp</code>
+    <span class='args'>
+      <var>timestamp-string</var>
+    </span>
+    <span class='result'>=> <var>universal-time</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='make-parameters'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>make-parameters</code>
+    <span class='args'>
+      <code class='llkw'>&amp;rest</code> <var>keys-and-values</var>
+    </span>
+    <span class='result'>=> <var>parameters</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<a name='credentials'><h2>Credentials</h2></a>
+
+<p>Credentials.
+
+<div class='item'>
+  <div class='type'><a name='*credentials*'>[Special variable]</a></div>
+  <div class='signature'>
+    <code class='name'>*credentials*</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='access-key-id'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>access-key-id</code>
+    <span class='args'>
+      <var>credentals</var>
+    </span>
+    <span class='result'>=> <var>access-key-id</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='secret-access-key'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>secret-access-key</code>
+    <span class='args'>
+      <var>credentials</var>
+    </span>
+    <span class='result'>=> <var>secret-access-key</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='session-token'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>session-token</code>
+    <span class='args'>
+      <var>credentials</var>
+    </span>
+    <span class='result'>=> <var>session-token</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<a name='octet-sinks'><h2>Octet sinks</h2></a>
+
+<p>Octet sinks
+
+<div class='item'>
+  <div class='type'><a name='with-octet-sink'>[Macro]</a></div>
+  <div class='signature'>
+    <code class='name'>with-octet-sink</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='sink-write'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>sink-write</code>
+    <span class='args'>
+      <var>object</var> <var>sink</var>
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<a name='authentication'><h2>Authentication</h2></a>
+
+<p>Authentication
+
+<div class='item'>
+  <div class='type'><a name='aws-auth-mixin'>[Class]</a></div>
+  <div class='signature'>
+    <code class='name'>aws-auth-mixin</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+<div class='item'>
+  <div class='type'><a name='query-auth-v2'>[Class]</a></div>
+  <div class='signature'>
+    <code class='name'>query-auth-v2</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+<div class='item'>
+  <div class='type'><a name='query-auth-v3'>[Class]</a></div>
+  <div class='signature'>
+    <code class='name'>query-auth-v3</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='json-auth-v3'>[Class]</a></div>
+  <div class='signature'>
+    <code class='name'>json-auth-v3</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='sha256'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>sha256</code>
+    <span class='args'>
+      <var>vector</var>
+    </span>
+    <span class='result'>=> <var>digest-vector</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='hmac-sha256-signature-base64'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>hmac-sha256-signature-base64</code>
+    <span class='args'>
+      <var>secret-key</var> <var>vector</var>
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='sign'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>sign</code>
+    <span class='args'>
+      <var>request</var>
+    </span>
+    <span class='result'>=> request</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='string-to-sign'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>string-to-sign</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='vector-to-sign'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>vector-to-sign</code>
+    <span class='args'>
+      <var>request</var>
+    </span>
+    <span class='result'>=> <var>vector</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<a name='http-messages'><h2>HTTP messages</h2></a>
+
+<p>HTTP messages.
+
+
+<div class='item'>
+  <div class='type'><a name='content'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>content</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='headers'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>headers</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='uri'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>uri</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='ensure-header'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>ensure-header</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='delete-header'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>delete-header</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='response'>[Class]</a></div>
+  <div class='signature'>
+    <code class='name'>response</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='status-code'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>status-code</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='reason-phrase'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>reason-phrase</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='response-error'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>response-error</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='response-error-request'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>response-error-request</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='response-error-response'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>response-error-response</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='request'>[Class]</a></div>
+  <div class='signature'>
+    <code class='name'>request</code>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='protocol'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>protocol</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='host'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>host</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='method'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>method</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='content-type'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>content-type</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='parameters'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>parameters</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='uri-path'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>uri-path</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='ensure-parameter'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>ensure-parameter</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='delete-parameter'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>delete-parameter</code>
+    <span class='args'>
+      <var>key</var> <var>request</var>
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='submit'>[Function]</a></div>
+  <div class='signature'>
+    <code class='name'>submit</code>
+    <span class='args'>
+      <var>request</var>
+    </span>
+    <span class='result'>=> <var>response</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='check-response-error'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>check-response-error</code>
+    <span class='args'>
+      <var>request</var> <var>response</var>
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+<div class='item'>
+  <div class='type'><a name='process-response'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>process-response</code>
+    <span class='args'>
+      <var>request</var> <var>response</var>
+    </span>
+    <span class='result'>=> <var>response</var></span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+
+
+<div class='item'>
+  <div class='type'><a name='uri'>[Generic Function]</a></div>
+  <div class='signature'>
+    <code class='name'>uri</code>
+    <span class='args'>
+      ***args***
+    </span>
+    <span class='result'>=> |</span>
+  </div>
+
+  <blockquote class='description'>
+    ***description***
+  </blockquote>
+</div>
+
+
+
+
+</div>
+
+</body>
