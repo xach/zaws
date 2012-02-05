@@ -108,7 +108,8 @@ authentication strings-to-sign."
   (delete-parameter "Signature" request)
   (let ((token (session-token *credentials*)))
     (when token
-      (ensure-parameter "SecurityToken" token request))))
+      (ensure-parameter "SecurityToken" token request)))
+  request)
 
 (defmethod vector-to-sign ((request query-auth-v2))
   (with-octet-sink (sink)
@@ -142,7 +143,8 @@ the UTF-8 encoded octets of the string SECRET-KEY."
   (let ((token (session-token *credentials*)))
     (when token
       (ensure-header "x-amz-security-token" token request)))
-  (ensure-header "x-amz-date" (rfc1123-timestamp) request))
+  (ensure-header "x-amz-date" (rfc1123-timestamp) request)
+  request)
 
 (defmethod string-to-sign ((request query-auth-v3))
   (header-value "x-amz-date" request))
@@ -173,7 +175,8 @@ the UTF-8 encoded octets of the string SECRET-KEY."
       (error "No session token set in ~S"
              '*credentials*))
     (ensure-header "x-amz-date" (rfc1123-timestamp) request)
-    (ensure-header "x-amz-security-token" token request)))
+    (ensure-header "x-amz-security-token" token request))
+  request)
 
 (defun json-auth-v3-headers (request)
   (let ((headers (sort (copy-list
