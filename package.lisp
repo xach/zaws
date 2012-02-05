@@ -57,6 +57,7 @@
            #:aws-auth-mixin
            #:sha256
            #:hmac-sha256-signature-base64
+           #:prepare-for-signing
            #:sign
            #:string-to-sign
            #:vector-to-sign)

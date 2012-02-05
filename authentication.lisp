@@ -35,28 +35,44 @@
    "Any class that uses this mixin will be automatically signed before
    submission."))
 
+(defgeneric prepare-for-signing (request)
+  (:documentation
+   "Prepare REQUEST for signing by adding or converting any
+   information that needs to be available for the signing
+   process. Returns the REQUST object.")
+  (:method (request)
+    request))
+
 (defgeneric sign (request)
   (:documentation
    "Add authentication information to REQUEST based on the current
-   value of *CREDENTIALS* and the contents of the request."))
+   value of *CREDENTIALS* and the contents of the request. Return the
+   REQUEST object.")
+  (:method (request)
+    request))
 
 (defgeneric string-to-sign (request)
-  (:method (request)
-    "")
   (:documentation
-   "The string to sign for authentication."))
+   "The string to sign for authentication.")
+  (:method (request)
+    ""))
 
 (defgeneric vector-to-sign (request)
-  (:method (request)
-    (utf8 (string-to-sign request)))
   (:documentation
    "The vector to sign for authentication; should be used in
    preference to creating a string to sign if the string includes
    ASCII control codes like LF; otherwise defaults to an UTF-8
-   encoding of the string to sign."))
+   encoding of the string to sign.")
+  (:method (request)
+    (utf8 (string-to-sign request))))
+
+(defmethod sign :before ((request aws-auth-mixin))
+  (prepare-for-signing request))
 
 (defmethod submit :before ((request aws-auth-mixin))
   (sign request))
+
+
 
 
 ;;; Query Auth V2
@@ -84,7 +100,7 @@ authentication strings-to-sign."
                           #'string<
                           :key 'car)))))
 
-(defmethod sign :before ((request query-auth-v2))
+(defmethod prepare-for-signing ((request query-auth-v2))
   (ensure-parameter "AWSAccessKeyId" (access-key-id *credentials*) request)
   (ensure-parameter "SignatureVersion" (signature-version request) request)
   (ensure-parameter "SignatureMethod" "HmacSHA256" request)
@@ -122,7 +138,7 @@ the UTF-8 encoded octets of the string SECRET-KEY."
 
 (defclass query-auth-v3 (aws-auth-mixin) ())
 
-(defmethod sign :before ((request query-auth-v3))
+(defmethod prepare-for-signing ((request query-auth-v3))
   (let ((token (session-token *credentials*)))
     (when token
       (ensure-header "x-amz-security-token" token request)))
@@ -151,7 +167,7 @@ the UTF-8 encoded octets of the string SECRET-KEY."
 (defun sha256 (vector)
   (ironclad:digest-sequence :sha256 vector))
 
-(defmethod sign :before ((request json-auth-v3))
+(defmethod prepare-for-signing ((request json-auth-v3))
   (let ((token (session-token *credentials*)))
     (unless token
       (error "No session token set in ~S"
