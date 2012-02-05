@@ -16,7 +16,7 @@
                                      "Version" "2011-06-15")
    :host "sts.amazonaws.com"))
 
-(defmethod zaws:sign :before ((request sts-request))
+(defmethod zaws:prepare-for-signing :after ((request sts-request))
   (zaws:ensure-parameter "DurationSeconds"
                          (princ-to-string (duration-seconds request))
                          request))

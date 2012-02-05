@@ -14,5 +14,5 @@
    :protocol "https"
    :host "ec2.amazonaws.com"))
 
-(defmethod zaws:sign :before ((request ec2-request))
+(defmethod zaws:prepare-for-signing :after ((request ec2-request))
   (zaws:ensure-parameter "Action" (action request) request))

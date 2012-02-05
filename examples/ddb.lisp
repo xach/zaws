@@ -15,7 +15,7 @@
    :method :post
    :uri-path "/"))
 
-(defmethod zaws:sign :before ((request ddb-request))
+(defmethod zaws:prepare-for-signing :after ((request ddb-request))
   (zaws:ensure-header "x-amz-target"
                       (format nil "DynamoDB_20111205.~A"
                               (action request))

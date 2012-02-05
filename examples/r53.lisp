@@ -12,8 +12,3 @@
    :host "route53.amazonaws.com"
    :protocol "https"))
 
-(defbinder foo ()
-  ((create-instance 'bob)
-   ("Foo"
-     ("Bar"
-      ("Baz" (save-slot ricardo :as date))))))
