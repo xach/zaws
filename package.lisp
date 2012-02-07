@@ -39,7 +39,8 @@
            #:iso8601-timestamp
            #:rfc1123-timestamp
            #:parse-iso8601-timestamp
-           #:make-parameters)
+           #:make-parameters
+           #:do-parameters)
   ;; Credentials
   (:export #:*credentials*
            #:access-key-id

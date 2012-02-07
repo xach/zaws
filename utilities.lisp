@@ -138,6 +138,14 @@ to strings, if necessary."
     (loop for (key value) on keys-and-values by #'cddr
           collect (cons (stringize key) (stringize value)))))
 
+(defmacro do-parameters ((key value &optional result) parameters &body body)
+  "Evaluate BODY for with KEY and VALUE bound to each car and cdr in
+in the alist PARAMETERS."
+  `(progn
+     (loop for (,key . ,value) in ,parameters
+           do (progn ,@body))
+     ,result))
+
 
 ;;; Unexported, internal-use stuff
 
