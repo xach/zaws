@@ -87,5 +87,10 @@
            #:delete-parameter
            #:submit
            #:check-response-error
-           #:process-response))
+           #:process-response)
+  ;; Common query APIs
+  (:export #:common-query-request
+           #:action
+           #:action-parameters
+           #:api-version))
 
