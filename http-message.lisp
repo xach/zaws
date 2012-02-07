@@ -35,6 +35,16 @@
   (:documentation
    "The content (aka body) of OBJECT."))
 
+(defgeneric content-string (object)
+  (:documentation
+   "If the content of OBJECT is a string, return it, otherwise treat
+   it as utf-8 encoded octets and return its conversion to a string.")
+  (:method (object)
+    (let ((content (content object)))
+      (if (stringp content)
+          content
+          (flexi-streams:octets-to-string content :external-format :utf-8)))))
+
 (defgeneric (setf content) (new-value object))
 
 (defgeneric headers (object)

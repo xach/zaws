@@ -64,6 +64,7 @@
            #:vector-to-sign)
   ;; HTTP messages
   (:export #:content
+           #:content-string
            #:headers
            #:ensure-header
            #:delete-header
