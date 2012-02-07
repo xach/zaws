@@ -25,21 +25,44 @@
 ;;;; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 ;;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-;;;; zaws.asd
+;;;; common-query.lisp
 
-(asdf:defsystem #:zaws
-  :serial t
-  :depends-on (#:cl-base64
-               #:drakma
-               #:flexi-streams
-               #:ironclad)
-  :components ((:file "package")
-               (:file "utilities")
-               (:file "octet-sink")
-               (:file "credentials")
-               (:file "http-message")
-               (:file "response")
-               (:file "request")
-               (:file "authentication")
-               (:file "common-query")))
+;;;
+;;; Most AWS services have a similar style: One request parameter is
+;;; named Action, and the rest are arguments to that Action. Make it
+;;; easy to write support for services like that.
+;;;
 
+(in-package #:zaws)
+
+(defgeneric action (request)
+  (:documentation
+   "The 'action' of a common query request."))
+
+(defgeneric action-parameters (request)
+  (:documentation
+   "The parameters given to the 'action' of a common query request."))
+
+(defgeneric api-version (request)
+  (:documentation
+   "The API version of a request."))
+
+(defclass common-query-request (request query-auth-v2)
+  ((action
+    :initarg :action
+    :reader action)
+   (action-parameters
+    :initarg :action-parameters
+    :accessor action-parameters)
+   (api-version
+    :initarg :api-version
+    :reader api-version))
+  (:default-initargs
+   :action-parameters nil))
+
+(defmethod prepare-for-signing :after ((request common-query-request))
+  (ensure-parameter "Action" (action request) request)
+  (ensure-parameter "Version" (api-version request) request)
+  (do-parameters (key value)
+      (action-parameters request)
+    (ensure-parameter key value request)))
