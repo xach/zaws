@@ -163,5 +163,4 @@
                                  (puri:render-uri uri stream)))))
       (when must-close
         (close content-stream))
-      (check-response-error request response)
-      (process-response request response))))
+      response)))
