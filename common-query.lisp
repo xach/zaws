@@ -74,3 +74,14 @@
                                 :action-parameters
                                 (apply 'make-parameters action-parameters))))
     (submit request)))
+
+(defun submit-common-query* (host api-version method action
+                             &rest action-parameters)
+  (let ((request (make-instance 'common-query-request
+                                :host host
+                                :api-version api-version
+                                :method method
+                                :action action
+                                :action-parameters
+                                (apply 'make-parameters action-parameters))))
+    (submit request)))
