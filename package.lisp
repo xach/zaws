@@ -94,6 +94,5 @@
            #:action
            #:action-parameters
            #:api-version
-           #:submit-common-query
-           #:submit-common-query*))
+           #:submit-common-query))
 

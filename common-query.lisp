@@ -67,21 +67,12 @@
       (action-parameters request)
     (ensure-parameter key value request)))
 
-(defun submit-common-query (class method action &rest action-parameters)
-  (let ((request (make-instance class
-                                :method method
-                                :action action
-                                :action-parameters
-                                (apply 'make-parameters action-parameters))))
+(defun submit-common-query (class initargs action &rest action-parameters)
+  (let ((request (apply 'make-instance
+                        (or class 'common-query-request)
+                        :action action
+                        :action-parameters
+                        (apply 'make-parameters action-parameters)
+                        initargs)))
     (submit request)))
 
-(defun submit-common-query* (host api-version method action
-                             &rest action-parameters)
-  (let ((request (make-instance 'common-query-request
-                                :host host
-                                :api-version api-version
-                                :method method
-                                :action action
-                                :action-parameters
-                                (apply 'make-parameters action-parameters))))
-    (submit request)))
