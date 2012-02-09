@@ -66,3 +66,11 @@
   (do-parameters (key value)
       (action-parameters request)
     (ensure-parameter key value request)))
+
+(defun submit-common-query (class method action &rest action-parameters)
+  (let ((request (make-instance class
+                                :method method
+                                :action action
+                                :action-parameters
+                                (apply 'make-parameters action-parameters))))
+    (submit request)))

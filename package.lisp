@@ -93,5 +93,6 @@
   (:export #:common-query-request
            #:action
            #:action-parameters
-           #:api-version))
+           #:api-version
+           #:submit-common-query))
 
