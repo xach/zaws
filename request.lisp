@@ -154,6 +154,7 @@
                            :content (content request))
     (let ((response
            (make-instance 'response
+                          :request request
                           :content content
                           :status-code status-code
                           :reason-phrase reason-phrase

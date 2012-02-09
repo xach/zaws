@@ -29,6 +29,8 @@
 
 (in-package #:zaws)
 
+(defgeneric request (response))
+
 (defgeneric status-code (response)
   (:documentation
    "The HTTP status code of RESPONSE as an integer."))
@@ -55,7 +57,10 @@
                (reason-phrase response))))))
 
 (defclass response (http-message)
-  ((status-code
+  ((request
+    :initarg :request
+    :reader request)
+   (status-code
     :initarg :status-code
     :reader status-code)
    (reason-phrase
