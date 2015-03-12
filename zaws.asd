@@ -32,7 +32,7 @@
   :description "Amazon AWS request construction"
   :license "BSD"
   :author "Zach Beane <xach@xach.com>"
-  :version "1.0.1"
+  :version "1.0.2"
   :depends-on (#:cl-base64
                #:drakma
                #:flexi-streams
